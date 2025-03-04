@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "@public/css/main.css";
+import { ClerkProvider } from "@clerk/nextjs";
+import { esMX } from "@clerk/localizations";
 
 const nunito = localFont({
   src: "../public/fonts/Nunito.ttf",
@@ -17,8 +19,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
-      <body className={`${nunito.className} antialiased`}>{children}</body>
-    </html>
+    <ClerkProvider
+      localization={esMX}
+      appearance={{
+        // baseTheme: dark,
+        variables: { colorPrimary: "#F38533" },
+      }}
+    >
+      <html lang="es">
+        <body className={`${nunito.className} antialiased`}>{children}</body>
+      </html>
+    </ClerkProvider>
   );
 }
