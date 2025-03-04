@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Mis Pedidos</h2>
+<ul>
+    {% for pedido in pedidos %}
+    <li>{{ pedido.cantidad }} x {{ pedido.producto.nombre }} - ${{ pedido.total }} - Estado: {{ pedido.estado }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}
