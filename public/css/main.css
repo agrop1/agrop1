@@ -3,11 +3,21 @@
 @tailwind utilities;
 
 * {
-  @apply select-none;
-  -webkit-user-select: none;
+  /* @apply select-none;
+  -webkit-user-select: none; */
 }
 
 .unselectable {
   -webkit-user-select: none;
   user-select: none;
+}
+
+.icon {
+  @apply size-4;
+}
+
+.login-bg {
+  background-image: url("../assets/login-bg.webp");
+  background-size: cover;
+  background-position: center;
 }

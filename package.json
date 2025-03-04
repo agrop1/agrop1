@@ -9,9 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/localizations": "^3.10.8",
+    "@clerk/nextjs": "^6.12.2",
     "next": "15.1.5",
     "react": "19.0.0",
-    "react-dom": "19.0.0"
+    "react-dom": "19.0.0",
+    "react-icons": "^5.5.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "3",
