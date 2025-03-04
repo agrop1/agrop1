@@ -1,0 +1,5 @@
+# IMAGENES TALLER 2
+## PRODUCTOS
+![PRODUCTOS](Productos.png)
+## REGISTRO
+![REGISTRO](Registro.png)
