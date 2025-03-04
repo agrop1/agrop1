@@ -16,15 +16,14 @@ export default function ProductsPage() {
 
   // Cargar productos desde la API
   useEffect(() => {
-  fetch("/api/productos")
-    .then((res) => res.json())
-    .then((data) => {
-      console.log("Productos obtenidos:", data);
-      setProducts(data);
-    })
-    .catch((error) => console.error("Error cargando productos:", error));
-}, []);
-
+    fetch("/api/productos")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Productos obtenidos:", data);
+        setProducts(data);
+      })
+      .catch((error) => console.error("Error cargando productos:", error));
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -32,7 +31,6 @@ export default function ProductsPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     const method = editing ? "PUT" : "POST";
     const url = "/api/productos";
 
@@ -70,37 +68,49 @@ export default function ProductsPage() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Administrar Productos</h1>
+    <div>
+      {/* Navbar */}
+      <nav className="bg-green-500 p-4 text-white flex justify-between items-center">
+        <h1 className="text-xl font-bold">ECOMERCADO</h1>
+        <ul className="flex space-x-4">
+          <li><a href="#" className="hover:underline">Inicio</a></li>
+          <li><a href="#" className="hover:underline">Productos</a></li>
+          <li><a href="#" className="hover:underline">Contacto</a></li>
+        </ul>
+      </nav>
 
-      {/* Formulario */}
-      <form onSubmit={handleSubmit} className="flex flex-col gap-2 border p-4 rounded">
-        <input type="text" name="name" placeholder="Nombre" value={form.name} onChange={handleInputChange} required className="p-2 border rounded" />
-        <input type="number" name="price" placeholder="Precio" value={form.price} onChange={handleInputChange} required className="p-2 border rounded" />
-        <input type="number" name="weight" placeholder="Peso" value={form.weight} onChange={handleInputChange} required className="p-2 border rounded" />
-        <button type="submit" className="bg-blue-500 text-white p-2 rounded">
-          {editing ? "Actualizar Producto" : "Agregar Producto"}
-        </button>
-      </form>
+      <div className="max-w-2xl mx-auto p-4">
+        <h2 className="text-2xl font-bold mb-4">Administrar Productos</h2>
 
-      {/* Lista de productos */}
-      <div className="mt-4">
-        <h2 className="text-xl font-semibold mb-2">Mis Productos</h2>
-        {products.length === 0 ? (
-          <p className="text-gray-500">No hay productos.</p>
-        ) : (
-          <ul className="space-y-2">
-            {products.map((product) => (
-              <li key={product.id} className="flex justify-between p-2 border rounded">
-                <span>{product.name} - ${product.price} ({product.weight} kg)</span>
-                <div className="space-x-2">
-                  <button onClick={() => handleEdit(product)} className="bg-yellow-500 text-white p-1 rounded">Editar</button>
-                  <button onClick={() => handleDelete(product.id)} className="bg-red-500 text-white p-1 rounded">Eliminar</button>
-                </div>
-              </li>
-            ))}
-          </ul>
-        )}
+        {/* Formulario */}
+        <form onSubmit={handleSubmit} className="flex flex-col gap-2 border p-4 rounded">
+          <input type="text" name="name" placeholder="Nombre" value={form.name} onChange={handleInputChange} required className="p-2 border rounded" />
+          <input type="number" name="price" placeholder="Precio" value={form.price} onChange={handleInputChange} required className="p-2 border rounded" />
+          <input type="number" name="weight" placeholder="Peso" value={form.weight} onChange={handleInputChange} required className="p-2 border rounded" />
+          <button type="submit" className="bg-blue-500 text-white p-2 rounded">
+            {editing ? "Actualizar Producto" : "Agregar Producto"}
+          </button>
+        </form>
+
+        {/* Lista de productos */}
+        <div className="mt-4">
+          <h2 className="text-xl font-semibold mb-2">Mis Productos</h2>
+          {products.length === 0 ? (
+            <p className="text-gray-500">No hay productos.</p>
+          ) : (
+            <ul className="space-y-2">
+              {products.map((product) => (
+                <li key={product.id} className="flex justify-between p-2 border rounded">
+                  <span>{product.name} - ${product.price} ({product.weight} kg)</span>
+                  <div className="space-x-2">
+                    <button onClick={() => handleEdit(product)} className="bg-yellow-500 text-white p-1 rounded">Editar</button>
+                    <button onClick={() => handleDelete(product.id)} className="bg-red-500 text-white p-1 rounded">Eliminar</button>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       </div>
     </div>
   );
