@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 interface Product {
   id: number;
@@ -9,10 +9,21 @@ interface Product {
   weight: number;
 }
 
+interface ChatMessage {
+  role: "user" | "assistant";
+  content: string;
+}
+
 export default function ProductsPage() {
   const [products, setProducts] = useState<Product[]>([]);
   const [form, setForm] = useState({ id: 0, name: "", price: 0, weight: 0 });
   const [editing, setEditing] = useState(false);
+  
+  // Estados para el chatbot
+  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
+  const [userInput, setUserInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const chatEndRef = useRef<HTMLDivElement>(null);
 
   // Cargar productos desde la API
   useEffect(() => {
@@ -24,6 +35,11 @@ export default function ProductsPage() {
       })
       .catch((error) => console.error("Error cargando productos:", error));
   }, []);
+
+  // Auto-scroll al último mensaje
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [chatMessages]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -67,8 +83,45 @@ export default function ProductsPage() {
     }
   };
 
+  const handleChatSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!userInput.trim()) return;
+
+    // Añadir mensaje del usuario al chat
+    const newUserMessage: ChatMessage = { role: "user", content: userInput };
+    setChatMessages((prev) => [...prev, newUserMessage]);
+    setUserInput("");
+    setIsLoading(true);
+
+    try {
+      const response = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          messages: [...chatMessages, newUserMessage],
+          products: products // Enviamos los productos para dar contexto
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Error en la respuesta del chatbot");
+      }
+
+      const data = await response.json();
+      setChatMessages((prev) => [...prev, { role: "assistant", content: data.content }]);
+    } catch (error) {
+      console.error("Error al comunicarse con el chatbot:", error);
+      setChatMessages((prev) => [
+        ...prev,
+        { role: "assistant", content: "Lo siento, ha ocurrido un error. Por favor, intenta nuevamente." },
+      ]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
-    <div>
+    <div className="flex flex-col min-h-screen">
       {/* Navbar */}
       <nav className="bg-green-500 p-4 text-white flex justify-between items-center">
         <h1 className="text-xl font-bold">ECOMERCADO</h1>
@@ -79,7 +132,7 @@ export default function ProductsPage() {
         </ul>
       </nav>
 
-      <div className="max-w-2xl mx-auto p-4">
+      <div className="max-w-2xl mx-auto p-4 flex-grow">
         <h2 className="text-2xl font-bold mb-4">Administrar Productos</h2>
 
         {/* Formulario */}
@@ -110,6 +163,53 @@ export default function ProductsPage() {
               ))}
             </ul>
           )}
+        </div>
+      </div>
+
+      {/* Chat Section */}
+      <div className="border-t mt-4 bg-gray-50">
+        <div className="max-w-2xl mx-auto p-4">
+          <h2 className="text-xl font-semibold mb-2">Asistente de Productos</h2>
+          
+          {/* Chat Messages */}
+          <div className="border rounded p-4 h-64 overflow-y-auto mb-4 bg-white">
+            {chatMessages.length === 0 ? (
+              <p className="text-gray-500 text-center">Haz preguntas sobre nuestros productos</p>
+            ) : (
+              chatMessages.map((msg, index) => (
+                <div key={index} className={`mb-2 ${msg.role === "user" ? "text-right" : ""}`}>
+                  <div
+                    className={`inline-block p-2 rounded ${
+                      msg.role === "user" ? "bg-blue-100" : "bg-gray-100"
+                    }`}
+                  >
+                    {msg.content}
+                  </div>
+                </div>
+              ))
+            )}
+            {isLoading && (
+              <div className="text-gray-500">
+                <span className="animate-pulse">Escribiendo...</span>
+              </div>
+            )}
+            <div ref={chatEndRef} />
+          </div>
+
+          {/* Chat Input */}
+          <form onSubmit={handleChatSubmit} className="flex gap-2">
+            <input
+              type="text"
+              placeholder="¿Tienes alguna pregunta sobre nuestros productos?"
+              value={userInput}
+              onChange={(e) => setUserInput(e.target.value)}
+              className="flex-grow p-2 border rounded"
+              disabled={isLoading}
+            />
+            <button type="submit" className="bg-green-500 text-white p-2 rounded" disabled={isLoading}>
+              Enviar
+            </button>
+          </form>
         </div>
       </div>
     </div>
