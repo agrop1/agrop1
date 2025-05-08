@@ -1,5 +1,4 @@
 export const ENV = {
-  NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:
-    process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || "",
-  CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY || "",
+  MONGO_URI: process.env.MONGO_URI || '',
+  DB_NAME: process.env.DB_NAME || '',
 };

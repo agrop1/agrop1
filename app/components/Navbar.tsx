@@ -56,7 +56,7 @@ export default async function Navbar() {
             </ul>
           </div>
           <Link href="/" className="btn btn-ghost text-xl">
-            EcoMerc
+            ECOMERCADO
           </Link>
         </div>
         <div className="navbar-center hidden lg:flex">
@@ -101,7 +101,7 @@ export default async function Navbar() {
               />
             </Suspense>
           ) : (
-            <Link href="/login" className="btn btn-primary">
+            <Link href="/login" className="btn btn-accent">
               <IoLogIn className="size-6" />
               Iniciar Sesión
             </Link>
