@@ -14,11 +14,7 @@ export default function AnimationProvider({
   });
 
   return (
-    <div
-      ref={renderPage}
-      className="overflow-hidden h-dvh overflow-y-auto"
-      style={{ scrollbarGutter: "stable" }}
-    >
+    <div ref={renderPage} className="">
       {children}
     </div>
   );
