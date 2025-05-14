@@ -1,12 +1,20 @@
-import { UserButton } from "@clerk/nextjs";
-import { currentUser } from "@clerk/nextjs/server";
+"use client";
+
+import { UserButton, useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import React, { Suspense } from "react";
 import { IoLogIn } from "react-icons/io5";
-import { FaLeaf, FaShoppingBasket, FaUser } from "react-icons/fa";
+import {
+  FaLeaf,
+  FaShoppingBasket,
+  FaUser,
+  FaInfoCircle,
+  FaEnvelope,
+} from "react-icons/fa";
 
-export default async function Navbar() {
-  const user = await currentUser();
+export default function Navbar() {
+  const user = useUser();
+
   return (
     <div className="bg-base-100">
       <div className="navbar shadow-sm sticky top-0 z-50 container mx-auto">
@@ -47,6 +55,16 @@ export default async function Navbar() {
                   <FaUser /> Vender
                 </Link>
               </li>
+              <li>
+                <Link href="/nosotros" className="flex items-center gap-2">
+                  <FaInfoCircle /> Nosotros
+                </Link>
+              </li>
+              <li>
+                <Link href="/contacto" className="flex items-center gap-2">
+                  <FaEnvelope /> Contacto
+                </Link>
+              </li>
             </ul>
           </div>
           {/* Logo */}
@@ -78,6 +96,22 @@ export default async function Navbar() {
                 className="flex items-center gap-2 text-gray-600 hover:text-teal-600"
               >
                 <FaUser /> <span>Vender</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/nosotros"
+                className="flex items-center gap-2 text-gray-600 hover:text-teal-600"
+              >
+                <FaInfoCircle /> <span>Nosotros</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                href="/contacto"
+                className="flex items-center gap-2 text-gray-600 hover:text-teal-600"
+              >
+                <FaEnvelope /> <span>Contacto</span>
               </Link>
             </li>
           </ul>
