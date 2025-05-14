@@ -1,8 +1,11 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
+import styles from "./productos.module.css"; // Asumiendo que tienes un archivo CSS para estilos
 
 type Producto = {
-  _id: string;
+  _id: string; // Corregido a _id en lugar de *id
   nombre: string;
   descripcion: string;
   precio: number;
@@ -11,38 +14,66 @@ type Producto = {
 
 const Productos = () => {
   const [productos, setProductos] = useState<Producto[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchProductos = async () => {
-      const res = await fetch("/api/productos");
-      const data = await res.json();
-      setProductos(data);
+      try {
+        setLoading(true);
+        const res = await fetch("/api/productos");
+        
+        if (!res.ok) {
+          throw new Error(`Error: ${res.status}`);
+        }
+        
+        const data = await res.json();
+        setProductos(data);
+        setError(null);
+      } catch (err) {
+        console.error("Error fetching productos:", err);
+        setError("No se pudieron cargar los productos. Por favor, intenta de nuevo más tarde.");
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchProductos();
   }, []);
 
+  if (loading) {
+    return <div className="loading">Cargando productos...</div>;
+  }
+
+  if (error) {
+    return <div className="error">{error}</div>;
+  }
+
+  if (productos.length === 0) {
+    return <div className="empty">No hay productos disponibles.</div>;
+  }
+
   return (
-    <div className="p-6 bg-base-100 min-h-screen">
-      <h1 className="text-3xl font-bold text-center mb-10">Productos disponibles</h1>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div className="productos-container">
+      <h1>Nuestros Productos</h1>
+      <div className="productos-grid">
         {productos.map((producto) => (
-          <div key={producto._id} className="card bg-base-200 shadow-xl">
-            <figure>
-              <img
-                src={producto.imagen}
-                alt={producto.nombre}
-                className="h-48 w-full object-cover"
-              />
-            </figure>
-            <div className="card-body">
-              <h2 className="card-title">{producto.nombre}</h2>
-              <p>{producto.descripcion}</p>
-              <div className="card-actions justify-between mt-4">
-                <span className="text-primary font-bold">${producto.precio}</span>
-                <button className="btn btn-sm btn-success">Agregar</button>
+          <div key={producto._id} className="producto-card">
+            {producto.imagen && (
+              <div className="producto-imagen">
+                <Image
+                  src={`/capturas/${producto.imagen}`}
+                  alt={producto.nombre}
+                  width={200}
+                  height={200}
+                  layout="responsive"
+                />
               </div>
-            </div>
+            )}
+            <h2>{producto.nombre}</h2>
+            <p>{producto.descripcion}</p>
+            <p className="precio">${producto.precio.toLocaleString()}</p>
+            <button className="btn-agregar">Agregar al carrito</button>
           </div>
         ))}
       </div>

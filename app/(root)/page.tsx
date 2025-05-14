@@ -20,10 +20,6 @@ export default function HomePage() {
           <h2 className="text-3xl font-bold mb-4">¿Quiénes somos?</h2>
           <p className="text-gray-600 text-lg">
           En ECOMERCADO, creemos en el poder de la tierra y en el valor de quienes la trabajan. Somos una plataforma que conecta directamente a campesinos y pequeños productores con compradores conscientes de la ciudad, creando un puente de confianza, sostenibilidad y comercio justo.
-
-Nuestra misión es que los productos orgánicos cultivados con esfuerzo y respeto por la naturaleza lleguen a tu hogar sin intermediarios, apoyando economías locales y promoviendo una alimentación saludable y responsable.
-
-Más que un mercado, somos una comunidad que apuesta por el cambio: consumir con propósito, valorar lo natural y dignificar el trabajo del campo.
           </p>
         </div>
         <img
@@ -36,7 +32,7 @@ Más que un mercado, somos una comunidad que apuesta por el cambio: consumir con
       {/* Servicios */}
       <section>
         <h2 className="text-3xl font-bold text-center mb-12">Lo que ofrecemos</h2>
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-3 gap-8 ">
           {[
             { title: "Productos orgánicos", desc: "Frescos, locales y cultivados con respeto por la tierra y las personas." },
             { title: "Impacto social", desc: "Apoyamos la economía rural y fomentamos un consumo consciente y justo." },

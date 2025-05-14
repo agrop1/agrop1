@@ -21,3 +21,64 @@
   background-size: cover;
   background-position: center;
 }
+
+@layer utilities {
+  /* Primary - Verde natural */
+  .bg-custom-primary {
+    background-color: #4CAF50;
+  }
+  .text-custom-primary {
+    color: #4CAF50;
+  }
+  .custom-button-primary {
+    color: #4CAF50;
+    border-color: #4CAF50;
+  }
+  .custom-button-primary:hover {
+    background-color: #4CAF50;
+    color: #fff;
+  }
+
+  /* Secondary - Marrón tierra */
+  .bg-custom-secondary {
+    background-color: #8D6E63;
+  }
+  .text-custom-secondary {
+    color: #8D6E63;
+  }
+  .custom-button-secondary {
+    color: #8D6E63;
+    border-color: #8D6E63;
+  }
+  .custom-button-secondary:hover {
+    background-color: #8D6E63;
+    color: #fff;
+  }
+
+  /* Accent - Amarillo cálido */
+  .bg-custom-accent {
+    background-color: #FFB300;
+  }
+  .text-custom-accent {
+    color: #FFB300;
+  }
+  .custom-button-accent {
+    color: #FFB300;
+    border-color: #FFB300;
+  }
+  .custom-button-accent:hover {
+    background-color: #FFB300;
+    color: #fff;
+  }
+
+  /* Background */
+  .bg-custom-background {
+    background-color: #F1F8E9;
+  }
+
+  /* Text */
+  .text-custom-text {
+    color: #2E2E2E;
+  }
+}
+
