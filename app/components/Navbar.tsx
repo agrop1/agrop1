@@ -119,7 +119,7 @@ export default function Navbar() {
 
         {/* Navbar End: Login o Avatar */}
         <div className="navbar-end">
-          {user ? (
+          {user.isSignedIn ? (
             <Suspense>
               <UserButton
                 appearance={{

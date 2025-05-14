@@ -7,7 +7,7 @@ export default function layout({ children }: { children: React.ReactNode }) {
     <>
       <Navbar />
       <div
-        className="h-[calc(100vh-64px)] overflow-hidden overflow-y-auto"
+        className="h-[calc(100dvh-64px)] overflow-hidden overflow-y-auto"
         style={{ scrollbarGutter: "stable" }}
       >
         <div className="container mx-auto p-2 py-4">
