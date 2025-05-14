@@ -20,6 +20,11 @@ export default {
           success: "#00bc4e",
           warning: "#ffae00",
           error: "#ff6289",
+          verdenatural: "#4caf50",
+          marrontierra: "#8D6E63",
+          amarillocalido: "#FFB300",
+          verdeclaro: "#F1F8E9",
+          grisoscuro: "#2E2E2E"
         },
       },
     ],

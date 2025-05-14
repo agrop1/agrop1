@@ -1,5 +1,9 @@
-import React from "react";
+import ProductsGrid from "@/app/components/ProductsGrid";
 
-export default function page() {
-  return <div>page</div>;
+export default function ProductosPage() {
+  return (
+    <main>
+      <ProductsGrid />
+    </main>
+  );
 }
