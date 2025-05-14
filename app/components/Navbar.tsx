@@ -2,89 +2,88 @@ import { UserButton } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs/server";
 import Link from "next/link";
 import React, { Suspense } from "react";
-import { GiPotato } from "react-icons/gi";
 import { IoLogIn } from "react-icons/io5";
+import { FaLeaf, FaShoppingBasket, FaUser } from "react-icons/fa";
 
 export default async function Navbar() {
   const user = await currentUser();
   return (
-    <div className="bg-base-300">
-      <div className="navbar shadow-sm container mx-auto">
+    <div className="bg-base-100">
+      <div className="navbar shadow-sm sticky top-0 z-50 container mx-auto">
+        {/* Navbar Start: Dropdown para móvil */}
         <div className="navbar-start">
           <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost btn-circle lg:hidden"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
+                className="h-6 w-6"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
               >
-                {" "}
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h8m-8 6h16"
-                />{" "}
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
               </svg>
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-10 mt-3 w-52 p-2 shadow"
             >
               <li>
-                <Link href="/productos">
-                  <GiPotato className="size-6" />
-                  Productos
+                <Link href="/productos" className="flex items-center gap-2">
+                  <FaShoppingBasket /> Productos
                 </Link>
               </li>
-              {/* <li>
-                <a>Parent</a>
-                <ul className="p-2">
-                  <li>
-                    <a>Submenu 1</a>
-                  </li>
-                  <li>
-                    <a>Submenu 2</a>
-                  </li>
-                </ul>
-              </li>
               <li>
-                <a>Item 3</a>
-              </li> */}
+                <Link href="/vendedor" className="flex items-center gap-2">
+                  <FaUser /> Vender
+                </Link>
+              </li>
             </ul>
           </div>
-          <Link href="/" className="btn btn-ghost text-xl">
-            ECOMERCADO
+          {/* Logo */}
+          <Link
+            href="/"
+            className="flex items-center space-x-2 text-teal-600 hover:text-teal-700 transition-colors ml-2"
+          >
+            <FaLeaf className="h-8 w-8" />
+            <span className="text-xl font-bold hidden sm:inline">
+              ECOMERCADO
+            </span>
           </Link>
         </div>
+
+        {/* Navbar Center: Enlaces desktop */}
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">
+          <ul className="menu menu-horizontal px-1 gap-2">
             <li>
-              <Link href="/productos">
-                <GiPotato className="size-6" />
-                Productos
+              <Link
+                href="/productos"
+                className="flex items-center gap-2 text-gray-600 hover:text-teal-600"
+              >
+                <FaShoppingBasket /> <span>Productos</span>
               </Link>
             </li>
-            {/* <li>
-              <details>
-                <summary>Parent</summary>
-                <ul className="p-2">
-                  <li>
-                    <a>Submenu 1</a>
-                  </li>
-                  <li>
-                    <a>Submenu 2</a>
-                  </li>
-                </ul>
-              </details>
-            </li>
             <li>
-              <a>Item 3</a>
-            </li> */}
+              <Link
+                href="/vendedor"
+                className="flex items-center gap-2 text-gray-600 hover:text-teal-600"
+              >
+                <FaUser /> <span>Vender</span>
+              </Link>
+            </li>
           </ul>
         </div>
+
+        {/* Navbar End: Login o Avatar */}
         <div className="navbar-end">
           {user ? (
             <Suspense>
@@ -95,15 +94,23 @@ export default async function Navbar() {
                       width: "40px",
                       height: "40px",
                     },
+                    userButtonBox: {
+                      "&:hover": {
+                        backgroundColor: "rgb(20 184 166 / 0.1)",
+                      },
+                    },
                   },
                 }}
                 showName
               />
             </Suspense>
           ) : (
-            <Link href="/login" className="btn btn-accent">
-              <IoLogIn className="size-6" />
-              Iniciar Sesión
+            <Link
+              href="/login"
+              className="inline-flex items-center space-x-2 bg-teal-600 text-white px-4 py-2 rounded-lg hover:bg-teal-700 transition-colors"
+            >
+              <IoLogIn className="h-5 w-5" />
+              <span>Iniciar Sesión</span>
             </Link>
           )}
         </div>

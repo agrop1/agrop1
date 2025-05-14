@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "@public/css/main.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { esMX } from "@clerk/localizations";
+import AnimationProvider from "@/app/components/providers/AnimationProvider";
 
 const nunito = localFont({
   src: "../public/fonts/Nunito.ttf",
@@ -23,11 +24,13 @@ export default function RootLayout({
       localization={esMX}
       appearance={{
         // baseTheme: dark,
-        variables: { colorPrimary: "#F38533" },
+        variables: { colorPrimary: "#0fa294" },
       }}
     >
       <html lang="es">
-        <body className={`${nunito.className} antialiased`}>{children}</body>
+        <body className={`${nunito.className} antialiased overflow-hidden`}>
+          <AnimationProvider>{children}</AnimationProvider>
+        </body>
       </html>
     </ClerkProvider>
   );

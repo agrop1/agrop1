@@ -1,12 +1,11 @@
-import mongoose, { Connection } from 'mongoose';
-import { ENV } from './env';
-
+import { ENV } from "@/app/utils/env";
+import mongoose, { Connection } from "mongoose";
 
 // Inicializa la propiedad si no existe
 const connections = {} as Record<string, Connection>;
 
 export async function connectDB(
-  dbName: string = ENV.DB_NAME
+  dbName: string = ENV.DB_NAME,
 ): Promise<Connection> {
   if (connections[dbName]) {
     console.log(`🔄 Reutilizando conexión a la base de datos: ${dbName}`);
@@ -26,7 +25,7 @@ export async function connectDB(
 
     connections[dbName] = db;
 
-    console.log('🔗 Conexiones almacenadas:', Object.keys(connections));
+    console.log("🔗 Conexiones almacenadas:", Object.keys(connections));
 
     return db;
   } catch (error) {
