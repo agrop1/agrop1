@@ -24,6 +24,7 @@ import {
 import hero from "@/public/assets/login-bg.webp";
 import who from "@/public/assets/foto-quienessomos.jpg";
 
+export const dynamic = "force-static";
 export default function HomePage() {
   return (
     <main className="space-y-20 overflow-hidden">
