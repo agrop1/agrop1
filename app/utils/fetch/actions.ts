@@ -1,15 +1,12 @@
 "use server";
 
-import { auth } from "@clerk/nextjs/server";
-
 export async function getProduct(id: string) {
-  const { getToken } = await auth();
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/productos/${id}`,
     {
       cache: "no-store",
       headers: {
-        Authorization: `Bearer ${await getToken()}`,
+        "Content-Type": "application/json",
       },
     },
   );
